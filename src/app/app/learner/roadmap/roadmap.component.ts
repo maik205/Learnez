@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-roadmap',
   standalone: true,
-  imports: [],
+  imports: [RouterOutlet],
   templateUrl: './roadmap.component.html',
-  styleUrl: './roadmap.component.scss'
+  styleUrl: './roadmap.component.scss',
 })
-export class RoadmapComponent {
-
-}
+export class RoadmapComponent {}
