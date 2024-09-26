@@ -3,8 +3,10 @@
     <a href="/" class="text-2xl font-bold"><h5>Learnez</h5></a>
   </div>
   <div class="flex gap-3">
+    @if ( !authService.isLoggedIn ) {
     <a mat-stroked-button href="/auth/login">Login</a>
     <a mat-flat-button href="/auth/register">Register</a>
+    }
   </div>
 </nav>
 <main>

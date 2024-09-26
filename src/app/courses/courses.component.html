@@ -1,6 +1,5 @@
-@for (course of courses; track $index) {
-  <div>
-
-  </div>
-
-}
+<div class="flex w-full gap-3 overflow-x-auto">
+  @for (course of courses; track $index) {
+  <course-preview [course]="course"></course-preview>
+  }
+</div>

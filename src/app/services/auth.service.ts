@@ -1,12 +1,4 @@
-import {
-  inject,
-  Injectable,
-  OnDestroy,
-  Optional,
-  signal,
-  Signal,
-  WritableSignal,
-} from '@angular/core';
+import { Injectable, OnDestroy, Optional } from '@angular/core';
 import {
   Auth,
   authState,
@@ -23,25 +15,42 @@ import { traceUntilFirst } from '@angular/fire/performance';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
+export class AuthService implements OnDestroy {
   isLoggedIn: boolean = false;
   private readonly userDisposable: Subscription | undefined;
-  public readonly user: WritableSignal<User | null> = signal(null);
-  private auth = inject(Auth);
-  constructor() {
-    this.user = authState(this.auth);
+  public readonly user: Observable<User | null> = EMPTY;
+
+  constructor(@Optional() private auth: Auth) {
+    if (auth) {
+      this.user = authState(this.auth);
+      this.userDisposable = authState(this.auth)
+        .pipe(
+          traceUntilFirst('auth'),
+          map((u) => !!u)
+        )
+        .subscribe((isLoggedIn: boolean) => {
+          this.isLoggedIn = isLoggedIn;
+        });
+    }
+  }
+  ngOnDestroy(): void {
+    if (this.userDisposable) {
+      this.userDisposable.unsubscribe();
+    }
   }
 
   async login(username: string, password: string, ifKeepLogin: boolean) {
     const perisistence =
       ifKeepLogin == true ? browserLocalPersistence : browserSessionPersistence;
     return await signInWithEmailAndPassword(this.auth, username, password)
-      .then(async () => {
+      .then(async (res) => {
         await setPersistence(this.auth, perisistence);
         this.isLoggedIn = true;
+        localStorage.setItem('user', JSON.stringify(res.user));
       })
       .catch((err) => {
         this.isLoggedIn = false;
+        localStorage.removeItem('user');
         throw err;
       });
   }
@@ -49,6 +58,7 @@ export class AuthService {
   logout() {
     this.auth.signOut();
     window.location.reload();
+    localStorage.removeItem('user');
   }
   async register(email: string, password: string) {
     let cred = await createUserWithEmailAndPassword(this.auth, email, password);

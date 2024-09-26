@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card class="w-96 h-full" appearance="outlined">
   <mat-card-header>
     <mat-card-title>{{ course().title }}</mat-card-title>
     <mat-card-subtitle>{{ course().description }}</mat-card-subtitle>
@@ -9,14 +9,13 @@
     matCardImage
     [src]="course().imageName"
   />
-  <mat-card-content>
+  <mat-card-content class="h-full"> </mat-card-content>
+  <mat-card-actions align="end">
     <mat-progress-bar
       mode="determinate"
       [value]="50"
       color="primary"
     ></mat-progress-bar>
-  </mat-card-content>
-  <mat-card-actions align="end">
     <button mat-button>View</button>
     <button mat-button>Enroll</button>
   </mat-card-actions>

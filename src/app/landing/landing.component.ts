@@ -1,8 +1,9 @@
 import { routes } from './../app.routes';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterOutlet, Routes } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-landing',
@@ -12,5 +13,6 @@ import { RouterOutlet, Routes } from '@angular/router';
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
 })
-export class LandingComponent {}
-
+export class LandingComponent {
+  public authService = inject(AuthService);
+}
