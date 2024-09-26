@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: '/app/learner/dashboard',
     pathMatch: 'full',
   },
   {
@@ -17,6 +17,8 @@ export const routes: Routes = [
     path: 'roadmap',
     loadComponent: () =>
       import('./roadmap/roadmap.component').then((m) => m.RoadmapComponent),
+    loadChildren: () =>
+      import('./roadmap/roadmap.routing').then((m) => m.routes),
   },
-
 ];
+export default routes;
