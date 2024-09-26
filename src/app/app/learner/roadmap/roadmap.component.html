@@ -1,1 +1,30 @@
-<router-outlet></router-outlet>
+<div class="flex w-full h-full p-5 box-border gap-3">
+  <mat-card class="w-96" appearance="raised">
+    <mat-card-header>
+      <mat-card-title>Roadmap Management</mat-card-title>
+      <mat-card-subtitle>Explore your learning journey</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="!flex h-full flex-col">
+      <div
+        class="w-full h-max relative mt-5 overflow-y-auto pb-5 box-border overflow-x-hidden flex flex-col gap-4"
+      >
+        @for (item of menus; track $index) {
+        <a
+          routerLinkActive
+          #rla="routerLinkActive"
+          [disabled]="rla.isActive"
+          [routerLink]="item.nav"
+          class="w-full !justify-start"
+          mat-stroked-button
+        >
+          <mat-icon>{{ item.icon }}</mat-icon>
+          {{ item.name }}
+        </a>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <div class="w-full h-full overflow-y-auto overflow-x-hidden">
+    <router-outlet></router-outlet>
+  </div>
+</div>

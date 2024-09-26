@@ -1,34 +1,47 @@
-import { Component, inject } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { AsyncPipe } from '@angular/common';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { Roadmap } from '../../../../services/interfaces/roadmap.interface';
+import {
+  PLACEHOLDER_COURSES,
+  PLACEHOLDER_ROADMAPS,
+} from '../../../../services/placeholder';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { Course } from '../../../../services/interfaces/course.interface';
+import { CourseCardComponent } from '../../../components/course/card/card.component';
+import { RoadmapVisualizerComponent } from '../../../components/roadmap/visualizer/visualizer.component';
 import { MatIconModule } from '@angular/material/icon';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
-
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 @Component({
   selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss',
   standalone: true,
   imports: [
-    MatToolbarModule,
+    MatCardModule,
     MatButtonModule,
-    MatSidenavModule,
-    MatListModule,
+    MatChipsModule,
+    MatExpansionModule,
+    CourseCardComponent,
+    RoadmapVisualizerComponent,
     MatIconModule,
-    AsyncPipe,
-  ]
+    MatProgressBarModule,
+  ],
+  templateUrl: './dashboard.component.html',
+  styleUrl: './dashboard.component.scss',
 })
 export class RoadmapDashboardComponent {
-  private breakpointObserver = inject(BreakpointObserver);
+  public readonly roadmaps: Roadmap[] = PLACEHOLDER_ROADMAPS;
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches),
-      shareReplay()
-    );
+  public getCourseSuggestions(roadmap: Roadmap): Course[] {
+    return PLACEHOLDER_COURSES;
+  }
+  public getCourseProgress(roadmap: Roadmap): number {
+    let completedSteps = 0;
+    roadmap.steps.forEach((step) => {
+      if (step.isCompleted) {
+        completedSteps++;
+      }
+    });
+    return (completedSteps / roadmap.steps.length) * 100;
+  }
 }

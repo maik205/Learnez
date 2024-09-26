@@ -1,0 +1,23 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ course().title }}</mat-card-title>
+    <mat-card-subtitle>{{ course().description }}</mat-card-subtitle>
+  </mat-card-header>
+  <img
+    [title]="course().title"
+    [alt]="course().description"
+    matCardImage
+    [src]="course().imageName"
+  />
+  <mat-card-content>
+    <mat-progress-bar
+      mode="determinate"
+      [value]="50"
+      color="primary"
+    ></mat-progress-bar>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-button>View</button>
+    <button mat-button>Enroll</button>
+  </mat-card-actions>
+</mat-card>

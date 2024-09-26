@@ -1,1 +1,46 @@
-<p>register works!</p>
+<div class="w-full h-full grid place-items-center">
+  <mat-card appearance="outlined" class="w-96">
+    <mat-card-header>
+      <mat-card-title>Sign Up</mat-card-title>
+      <mat-card-subtitle>Enter your email and set a password</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="form" class="flex flex-col mt-3 gap-3">
+        <mat-form-field appearance="outline">
+          <input
+            type="email"
+            formControlName="email"
+            matInput
+            placeholder="Email"
+          />
+          <mat-error>Please enter a valid email</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <input
+            type="password"
+            formControlName="password"
+            matInput
+            placeholder="Password"
+          />
+          <mat-error>Password is required</mat-error>
+        </mat-form-field>
+
+        @if (this.error) {
+        <mat-error>{{ this.error }}</mat-error>
+        }
+        <button (click)="register()" mat-flat-button color="primary">
+          @if (isRegistering) {
+          <mat-progress-spinner
+            [diameter]="20"
+            [mode]="'indeterminate'"
+          ></mat-progress-spinner>
+          }@else { Sign Up}
+        </button>
+      </form>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <!-- <button mat-button>Forgot Password?</button> -->
+      <a href="/auth/login" mat-button>Sign In</a>
+    </mat-card-actions>
+  </mat-card>
+</div>

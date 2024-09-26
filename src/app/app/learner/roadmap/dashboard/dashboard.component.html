@@ -1,28 +1,59 @@
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>Menu</mat-toolbar>
-    <mat-nav-list>
-      <a mat-list-item href="#">Link 1</a>
-      <a mat-list-item href="#">Link 2</a>
-      <a mat-list-item href="#">Link 3</a>
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      @if (isHandset$ | async) {
-        <button
-          type="button"
-          aria-label="Toggle sidenav"
-          mat-icon-button
-          (click)="drawer.toggle()">
-          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-        </button>
-      }
-      <span>learnez</span>
-    </mat-toolbar>
-    <!-- Add Content Here -->
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<div class="mb-10">
+  <h5 class="!mb-0 underline">Dashboard</h5>
+  <h6>Find your learning journey's roadmaps here.</h6>
+</div>
+<div>
+  <mat-accordion>
+    @for (roadmap of roadmaps; track $index){
+    <mat-expansion-panel [hideToggle]="false">
+      <mat-expansion-panel-header class="!py-4">
+        <div>
+          <h6>
+            {{ roadmap.title }}
+          </h6>
+          <div>
+            {{ roadmap.description }}
+          </div>
+          <div class="flex w-96 items-center gap-5">
+            <small>Progress</small>
+            <mat-progress-bar
+              mode="determinate"
+              [value]="getCourseProgress(roadmap)"
+              color="primary"
+            ></mat-progress-bar>
+            <small> {{ getCourseProgress(roadmap) }}% </small>
+          </div>
+        </div>
+        <!-- <mat-panel-title>
+        </mat-panel-title>
+        <mat-panel-description>{{ roadmap.description }}</mat-panel-description> -->
+      </mat-expansion-panel-header>
+      <mat-card appearance="outlined">
+        <mat-card-content>
+          <title>Related Categories</title>
+          <mat-chip-grid>
+            @for (category of roadmap.relatedCategories; track $index) {
+            <mat-chip>{{ category }}</mat-chip>
+            }
+          </mat-chip-grid>
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title> Roadmap Overview </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <roadmap-visualizer [roadmapSteps]="roadmap.steps">
+              </roadmap-visualizer>
+            </mat-card-content>
+            <mat-card-actions align="end">
+              <button mat-flat-button>
+                View in detail
+                <mat-icon> arrow_forward </mat-icon>
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </mat-card-content>
+      </mat-card>
+    </mat-expansion-panel>
+    }
+  </mat-accordion>
+</div>

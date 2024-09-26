@@ -7,20 +7,25 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: 'dashboard',
+    loadComponent: () =>
+      import('./dashboard/dashboard.component').then(
+        (m) => m.RoadmapDashboardComponent
+      ),
+  },
+  {
     path: 'new',
     loadComponent: () =>
       import('./new/new.component').then((m) => m.NewRoadmapComponent),
   },
   {
     path: 'view',
-    loadComponent: () =>
-      import('./view/view.component').then((m) => m.ViewRoadmapComponent),
+    redirectTo: 'dashboard',
+    pathMatch: 'full',
   },
   {
-    path: 'dashboard',
+    path: 'view/:id',
     loadComponent: () =>
-      import('./dashboard/dashboard.component').then(
-        (m) => m.RoadmapDashboardComponent
-      ),
+      import('./view/view.component').then((m) => m.ViewRoadmapComponent),
   },
 ];

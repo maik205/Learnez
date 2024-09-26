@@ -25,13 +25,4 @@ import { RouterOutlet } from '@angular/router';
     RouterOutlet,
   ],
 })
-export class LearnerComponent {
-  private breakpointObserver = inject(BreakpointObserver);
-
-  isHandset$: Observable<boolean> = this.breakpointObserver
-    .observe(Breakpoints.Handset)
-    .pipe(
-      map((result) => result.matches),
-      shareReplay()
-    );
-}
+export class LearnerComponent {}

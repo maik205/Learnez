@@ -1,7 +1,6 @@
-
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -13,20 +12,22 @@
 @include mat.core();
 
 // Define the theme object.
-$learnez-theme: mat.define-theme((
-  color: (
-    theme-type: light,
-    primary: mat.$azure-palette,
-    tertiary: mat.$orange-palette,
-  ),
-  typography: (
-    plain-family: 'Fredoka',
-    brand-family: 'Fredoka',
-    bold-weight: 600,
-    medium-weight: 500,
-    regular-weight: 400,
+$learnez-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: dark,
+      primary: mat.$azure-palette,
+      tertiary: mat.$orange-palette,
+    ),
+    typography: (
+      plain-family: "Fredoka",
+      brand-family: "Fredoka",
+      bold-weight: 600,
+      medium-weight: 500,
+      regular-weight: 400,
+    ),
   )
-));
+);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -44,5 +45,56 @@ $learnez-theme: mat.define-theme((
 // @include mat.color-variants-backwards-compatibility($learnez-theme);
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0;}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+}
+
+h6 {
+  margin-bottom: 0 !important;
+}
+a {
+  @if mat.get-theme-type($learnez-theme) == dark {
+    color: mat.get-theme-color($learnez-theme, primary, 50);
+  } @else {
+    color: mat.get-theme-color($learnez-theme, primary, 70);
+  }
+  text-decoration: none;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: mat.get-theme-color($learnez-theme, surface-dim);
+  border-radius: 12px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: mat.get-theme-color($learnez-theme, on-surface);
+  border-radius: 12px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: mat.get-theme-color($learnez-theme, primary);
+}
+::selection {
+  background: mat.get-theme-color($learnez-theme, primary);
+  color: mat.get-theme-color($learnez-theme, on-primary);
+}
+::-moz-selection {
+  background: mat.get-theme-color($learnez-theme, primary);
+  color: mat.get-theme-color($learnez-theme, on-primary);
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}

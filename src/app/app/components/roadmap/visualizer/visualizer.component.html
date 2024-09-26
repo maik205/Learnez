@@ -1,0 +1,24 @@
+<div
+  [ngClass]="
+{
+  'overflow-x-auto': orientation() === 'horizontal',
+  'overflow-y-auto': orientation() === 'vertical',
+}"
+  class="w-full h-full"
+>
+  <div class="gap-5 flex flex-1 w-max items-center">
+    @for (step of roadmapSteps(); track $index) {
+    <mat-card appearance="outlined" class="max-w-96">
+      <mat-card-header>
+        <mat-card-title>{{ step.stepName }}</mat-card-title>
+        <mat-card-subtitle>{{ step.stepDescription }}</mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+    @if ( $index !== roadmapSteps().length - 1 ) {
+    <mat-icon>
+      @if ( orientation() === 'horizontal' ) { arrow_forward } @else {
+      arrow_downward }
+    </mat-icon>
+    } }
+  </div>
+</div>
