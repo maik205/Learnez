@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewComponent } from './new.component';
+import { NewRoadmapComponent } from './new.component';
 
 describe('NewComponent', () => {
-  let component: NewComponent;
-  let fixture: ComponentFixture<NewComponent>;
+  let component: NewRoadmapComponent;
+  let fixture: ComponentFixture<NewRoadmapComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NewComponent]
+      imports: [NewRoadmapComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(NewComponent);
+    fixture = TestBed.createComponent(NewRoadmapComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

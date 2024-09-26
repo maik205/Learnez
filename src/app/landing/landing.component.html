@@ -1,1 +1,12 @@
-<p>landing works!</p>
+<nav class="w-full flex justify-between box-border px-3 items-center">
+  <div>
+    <a href="/" class="text-2xl font-bold"><h5>Learnez</h5></a>
+  </div>
+  <div class="flex gap-3">
+    <a mat-stroked-button href="/auth/login">Login</a>
+    <a mat-flat-button href="/auth/register">Register</a>
+  </div>
+</nav>
+<main>
+  <router-outlet></router-outlet>
+</main>

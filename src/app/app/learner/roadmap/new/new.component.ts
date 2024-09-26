@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
   templateUrl: './new.component.html',
   styleUrl: './new.component.scss'
 })
-export class NewComponent {
+export class NewRoadmapComponent {
 
 }
