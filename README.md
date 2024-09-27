@@ -1,6 +1,8 @@
 # Learnez
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.4.
+This project is a prototype of Learnez - an education platform for students accessing knowledge. 
+Owning unique features that helps students personalize their major is a key point of Learnez. With friendly interface and free access of 5 roadmaps experiencing, this will help such students to accessing courses that are not available in each users' condition.
+For future upgrade, Learnez aims for developing an evaluation metric which is a cons in current prototype. Receiving the user experience and evaluation on the teachers' courses by users are the points for the this method.
 
 ## Development server
 
