@@ -31,11 +31,11 @@
       <mat-card appearance="outlined">
         <mat-card-content>
           <title>Related Categories</title>
-          <mat-chip-grid>
+          <mat-chip-listbox>
             @for (category of roadmap.relatedCategories; track $index) {
             <mat-chip>{{ category }}</mat-chip>
             }
-          </mat-chip-grid>
+          </mat-chip-listbox>
           <mat-card>
             <mat-card-header>
               <mat-card-title> Roadmap Overview </mat-card-title>

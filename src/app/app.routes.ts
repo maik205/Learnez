@@ -11,6 +11,7 @@ export const routes: Routes = [
   },
   {
     path: 'app',
+
     loadComponent: () =>
       import('./app/app.component').then((m) => m.AppComponent),
     loadChildren: () => import('./app/app.routing').then((m) => m.routes),

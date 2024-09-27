@@ -1,3 +1,4 @@
+import { PLACEHOLDER_ROADMAPS } from './../../../../services/placeholder';
 import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -5,7 +6,6 @@ import { MatChipsModule } from '@angular/material/chips';
 import { Roadmap } from '../../../../services/interfaces/roadmap.interface';
 import {
   PLACEHOLDER_COURSES,
-  PLACEHOLDER_ROADMAPS,
 } from '../../../../services/placeholder';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { Course } from '../../../../services/interfaces/course.interface';
@@ -17,6 +17,7 @@ import {
   collectionData,
   collection,
   getFirestore,
+  getDocs,
 } from '@angular/fire/firestore';
 import { firstValueFrom } from 'rxjs';
 import { AuthService } from '../../../../services/auth.service';
@@ -40,7 +41,7 @@ export class RoadmapDashboardComponent {
   public roadmaps: Roadmap[] = PLACEHOLDER_ROADMAPS;
   async ngOnInit(): Promise<void> {
     (
-      await collectionData(
+      await getDocs(
         collection(
           getFirestore(),
           `roadmaps/users/${(await firstValueFrom(this.auth.user))?.uid}`

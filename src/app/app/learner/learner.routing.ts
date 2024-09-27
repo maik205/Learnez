@@ -3,15 +3,8 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'roadmap',
     pathMatch: 'full',
-  },
-  {
-    path: 'dashboard',
-    loadComponent: () =>
-      import('./dashboard/dashboard.component').then(
-        (m) => m.DashboardComponent
-      ),
   },
   {
     path: 'roadmap',
@@ -20,10 +13,10 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./roadmap/roadmap.routing').then((m) => m.routes),
   },
-  {
-    path: 'course/:id',
-    loadComponent: () =>
-      import('./course/course.component').then((m) => m.CourseComponent),
-  }
+  // {
+  //   path: 'course/:id',
+  //   loadComponent: () =>
+  //     import('./course/course.component').then((m) => m.CourseComponent),
+  // },
 ];
 export default routes;
