@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
@@ -13,6 +13,13 @@ import { CourseCardComponent } from '../../../components/course/card/card.compon
 import { RoadmapVisualizerComponent } from '../../../components/roadmap/visualizer/visualizer.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import {
+  collectionData,
+  collection,
+  getFirestore,
+} from '@angular/fire/firestore';
+import { firstValueFrom } from 'rxjs';
+import { AuthService } from '../../../../services/auth.service';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -30,18 +37,34 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
   styleUrl: './dashboard.component.scss',
 })
 export class RoadmapDashboardComponent {
-  public readonly roadmaps: Roadmap[] = PLACEHOLDER_ROADMAPS;
-
+  public roadmaps: Roadmap[] = PLACEHOLDER_ROADMAPS;
+  async ngOnInit(): Promise<void> {
+    (
+      await collectionData(
+        collection(
+          getFirestore(),
+          `roadmaps/users/${(await firstValueFrom(this.auth.user))?.uid}`
+        )
+      )
+    ).forEach((doc: any) => {
+      this.roadmaps.push(doc);
+    });
+  }
+  private auth = inject(AuthService);
   public getCourseSuggestions(roadmap: Roadmap): Course[] {
     return PLACEHOLDER_COURSES;
   }
   public getCourseProgress(roadmap: Roadmap): number {
     let completedSteps = 0;
-    roadmap.steps.forEach((step) => {
-      if (step.isCompleted) {
-        completedSteps++;
-      }
-    });
-    return (completedSteps / roadmap.steps.length) * 100;
+    try {
+      roadmap.steps.forEach((step) => {
+        if (step.isCompleted) {
+          completedSteps++;
+        }
+      });
+      return (completedSteps / roadmap.steps.length) * 100;
+    } catch {
+      return 0;
+    }
   }
 }

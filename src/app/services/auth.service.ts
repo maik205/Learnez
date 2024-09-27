@@ -6,7 +6,6 @@ import {
   browserSessionPersistence,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  updateProfile,
 } from '@angular/fire/auth';
 import { setPersistence, User } from '@firebase/auth';
 import { EMPTY, map, Observable, Subscription } from 'rxjs';
@@ -30,6 +29,7 @@ export class AuthService implements OnDestroy {
         )
         .subscribe((isLoggedIn: boolean) => {
           this.isLoggedIn = isLoggedIn;
+          console.log('isLoggedIn', this.isLoggedIn);
         });
     }
   }

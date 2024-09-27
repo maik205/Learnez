@@ -6,7 +6,14 @@
 }"
   class="w-full h-full"
 >
-  <div class="gap-5 flex flex-1 w-max items-center">
+  <div
+    [ngClass]="
+  {
+    'flex flex-col': orientation() === 'vertical',
+    'flex-row': orientation() === 'horizontal',
+  }"
+    class="gap-5 flex flex-1 w-max items-center"
+  >
     @for (step of roadmapSteps(); track $index) {
     <mat-card appearance="outlined" class="max-w-96">
       <mat-card-header>

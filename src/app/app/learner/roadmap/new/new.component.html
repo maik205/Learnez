@@ -6,14 +6,19 @@
   </h6>
 </div>
 
-<mat-stepper linear="true">
+<mat-stepper #mainStepper linear="true">
   <mat-step label="Getting to know your interests">
-    <mat-stepper #stepper orientation="vertical">
+    <mat-stepper linear="true" #stepper orientation="vertical">
       <mat-step label="What's your educational level?">
-        <mat-radio-group class="flex-col flex">
-          <mat-radio-button>High School</mat-radio-button>
-          <mat-radio-button>Undergraduate</mat-radio-button>
-          <mat-radio-button>Postgraduate</mat-radio-button>
+        <mat-radio-group
+          [(ngModel)]="this.educationLevel"
+          class="flex-col flex"
+        >
+          <mat-radio-button value="High School">High School</mat-radio-button>
+          <mat-radio-button value="Undergraduate"
+            >Undergraduate</mat-radio-button
+          >
+          <mat-radio-button value="Postgraduate">Postgraduate</mat-radio-button>
         </mat-radio-group>
       </mat-step>
       <mat-step label="Which field are you interested in?">
@@ -36,28 +41,51 @@
       <mat-step
         label="Pick the categories that best aligns with your interests!"
       >
-        <mat-chip-grid>
-          <mat-chip-option>Programming</mat-chip-option>
-          <mat-chip-option>Mathematics</mat-chip-option>
-          <mat-chip-option>Physics</mat-chip-option>
-          <mat-chip-option>Biology</mat-chip-option>
-          <mat-chip-option>Chemistry</mat-chip-option>
-          <mat-chip-option>History</mat-chip-option>
-          <mat-chip-option>Geography</mat-chip-option>
-          <mat-chip-option>Literature</mat-chip-option>
-          <mat-chip-option>Art</mat-chip-option>
-          <mat-chip-option>Music</mat-chip-option>
-          <mat-chip-option>Economics</mat-chip-option>
-          <mat-chip-option>Philosophy</mat-chip-option>
-          <mat-chip-option>Psychology</mat-chip-option>
-        </mat-chip-grid>
+        <mat-chip-listbox multiple="true" [(ngModel)]="interestedCategories">
+          @for (category of getCategories(); track $index) {
+          <mat-chip-option [value]="category">{{ category }}</mat-chip-option>
+          }
+        </mat-chip-listbox>
       </mat-step>
     </mat-stepper>
     <div class="w-full justify-end gap-3 flex">
       <button mat-button (click)="stepper.previous()">Back</button>
-      <button mat-flat-button (click)="stepper.next()">Next</button>
+      <button
+        mat-flat-button
+        (click)="
+          stepper.selectedIndex != 3 ? stepper.next() : getSkillsSuggestions()
+        "
+      >
+        Next
+      </button>
     </div>
   </mat-step>
-  <mat-step label="Suggested skills"> </mat-step>
+  <mat-step label="Suggested skills">
+    <div class="w-full overflow-x-auto">
+      @if (!isWorking) {
+      <div class="w-max flex gap-5">
+        @for (skill of skills; track $index) {
+        <mat-card class="w-[25rem]" appearance="outlined">
+          <mat-card-header>
+            <mat-card-title>{{ skill.skillName }}</mat-card-title>
+            <mat-card-subtitle>{{ skill.skillDescription }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-actions align="end">
+            <button (click)="getRoadmap(skill)" mat-button>
+              Explore this roadmap
+            </button>
+          </mat-card-actions>
+        </mat-card>
+        }
+      </div>
+      } @else {
+      <h6>We're working our magic!!</h6>
+      <mat-progress-spinner
+        [diameter]="40"
+        [mode]="'indeterminate'"
+      ></mat-progress-spinner>
+      }
+    </div>
+  </mat-step>
   <mat-step label="Roadmap"> </mat-step>
 </mat-stepper>
